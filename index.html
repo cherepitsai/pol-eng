@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Unit 1</title>
+<style>
+:root{
+  --bg:#fff8f1; --card:#ffffff; --ink:#2b2118; --muted:#7a6a5c; --line:#f0dfcf;
+  --accent:#f26a1b; --accent-ink:#ffffff; --accent-soft:#ffe6d4;
+  --ok:#1f9d55; --ok-soft:#dcf5e6; --bad:#d64545; --bad-soft:#fde2e2; --en:#1d5fbf;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b1612; --card:#26201b; --ink:#f5ece4; --muted:#b8a796; --line:#3a3029;
+    --accent:#ff8a3d; --accent-ink:#1b1612; --accent-soft:#3b2717;
+    --ok:#4ccf86; --ok-soft:#173826; --bad:#ff7a7a; --bad-soft:#3d1c1c; --en:#7fb2ff;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b1612; --card:#26201b; --ink:#f5ece4; --muted:#b8a796; --line:#3a3029;
+  --accent:#ff8a3d; --accent-ink:#1b1612; --accent-soft:#3b2717;
+  --ok:#4ccf86; --ok-soft:#173826; --bad:#ff7a7a; --bad-soft:#3d1c1c; --en:#7fb2ff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+header.top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+header.top h1{font-size:28px;margin:0;letter-spacing:.5px}
+header.top .tag{background:var(--accent);color:var(--accent-ink);border-radius:10px;padding:2px 10px;font-weight:800}
+a{color:var(--accent)}
+.back{display:inline-block;margin:4px 0 12px;font-weight:600;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.topic{display:block;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;color:var(--ink)}
+.topic:hover{border-color:var(--accent)}
+.topic .em{font-size:34px}
+.topic b{display:block;font-size:19px}
+.topic small{color:var(--muted)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 14px}
+.tabs button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-weight:600;cursor:pointer}
+.tabs button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h3{margin:0 0 6px;font-size:20px}
+.card .hint{color:var(--muted);font-size:15px;margin:0 0 10px}
+.player{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+.player button,.btn{border:none;border-radius:12px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:var(--accent-soft);color:var(--ink)}
+.player button.sel{outline:3px solid var(--ink)}
+.theory p{margin:0 0 10px}
+.en{color:var(--en);font-weight:700}
+.say{border:none;background:var(--accent-soft);border-radius:8px;padding:2px 7px;margin-left:4px;cursor:pointer;font-size:15px}
+table.t{border-collapse:collapse;width:100%;font-size:16px;margin:6px 0}
+table.t td,table.t th{border:1px solid var(--line);padding:6px 8px;text-align:left}
+table.t th{background:var(--accent-soft)}
+.tw{overflow-x:auto}
+ol.items{padding-left:0;list-style:none;margin:0}
+ol.items li{padding:9px 0;border-bottom:1px dashed var(--line)}
+ol.items li:last-child{border-bottom:none}
+.num{display:inline-block;min-width:26px;font-weight:800;color:var(--muted)}
+input.f,select.f{font:inherit;font-size:17px;padding:5px 8px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);min-width:90px;max-width:100%}
+input.f.w{min-width:200px}
+input.f.ok,select.f.ok{border-color:var(--ok);background:var(--ok-soft)}
+input.f.bad,select.f.bad{border-color:var(--bad);background:var(--bad-soft)}
+.fix{color:var(--ok);font-weight:700;font-size:15px;margin-left:6px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.score{font-weight:800}
+.scene{background:var(--accent-soft);border-radius:12px;padding:10px 12px;margin:6px 0 10px;font-size:16px}
+.pic{font-size:30px;vertical-align:middle;margin-right:4px}
+.letters{letter-spacing:6px;font-weight:800;font-family:ui-monospace,Menlo,monospace}
+.abc{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px}
+.abc button{font:inherit;font-weight:800;font-size:20px;padding:8px 0;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.abc button small{display:block;font-size:12px;font-weight:600;color:var(--muted)}
+.warn{background:var(--bad-soft);border-radius:10px;padding:8px 10px;font-size:15px;margin-top:8px}
+.box{position:relative;height:120px;border-radius:12px;background:var(--bg);border:1px solid var(--line);margin:6px 0}
+.box span{position:absolute;font-size:38px;line-height:1}
+footer{color:var(--muted);font-size:14px;margin:24px 0}
+@media (max-width:520px){body{font-size:17px}input.f.w{min-width:150px}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ============ Speech ============ */
+const LANGS = {en:{code:'en-GB',label:'🇬🇧 English'}, ru:{code:'ru-RU',label:'🇷🇺 Русский'}, ca:{code:'ca-ES',label:'🟨🟥 Català'}};
+let voices=[];
+function loadVoices(){ try{ voices = speechSynthesis.getVoices(); }catch(e){} }
+if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function voiceFor(code){
+  const p = code.slice(0,2);
+  return voices.find(v=>v.lang && v.lang.replace('_','-')===code) || voices.find(v=>v.lang && v.lang.toLowerCase().startsWith(p));
+}
+function hasVoice(code){ loadVoices(); return !!voiceFor(code); }
+/* text: segments; {..} = English fragment */
+function speak(text, code, rate){
+  if(!('speechSynthesis' in window)) { alert('Этот браузер не умеет озвучивать текст.'); return; }
+  speechSynthesis.cancel();
+  const parts = [];
+  text.split(/(\{[^}]*\})/).forEach(s=>{
+    if(!s.trim()) return;
+    if(s[0]==='{') parts.push([s.slice(1,-1),'en-GB']); else parts.push([s, code]);
+  });
+  parts.forEach(([t,c])=>{
+    const u = new SpeechSynthesisUtterance(t);
+    u.lang = c; const v = voiceFor(c); if(v) u.voice = v;
+    u.rate = rate || (c==='en-GB' ? 0.85 : 0.95);
+    speechSynthesis.speak(u);
+  });
+}
+function sayEn(t){ speak('{'+t+'}','en-GB'); }
+function stopSpeak(){ try{speechSynthesis.cancel()}catch(e){} }
+function fmt(text){ // {..} -> blue english
+  return esc(text).replace(/\{([^}]*)\}/g,'<span class="en">$1</span>').replace(/\n/g,'</p><p>');
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* ============ Answer checking ============ */
+function norm(s){
+  s = String(s).toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.,!?¿¡:;]/g,' ').replace(/-/g,' ').replace(/\s+/g,' ').trim();
+  const map = [[/\bi'm\b/g,'i am'],[/\bit's\b/g,'it is'],[/\bhe's\b/g,'he is'],[/\bshe's\b/g,'she is'],[/\bthey're\b/g,'they are'],[/\bwe're\b/g,'we are'],[/\byou're\b/g,'you are'],[/\bname's\b/g,'name is'],[/\bisn't\b/g,'is not'],[/\baren't\b/g,'are not'],[/\bi've\b/g,'i have'],[/\bhaven't\b/g,'have not'],[/\bwhat's\b/g,'what is']];
+  map.forEach(([r,v])=>s=s.replace(r,v));
+  return s;
+}
+function matches(val, acc){
+  const n = norm(val);
+  return acc.some(a => a instanceof RegExp ? a.test(val.trim()) : norm(a)===n);
+}
+
+/* ============ Exercise renderers ============
+ Exercise: {title, hint, type:'fill'|'select', scene?, items:[...]}
+ fill item: {q:'text with ___ blanks', a:[[...],[...]], say?, w?}
+ select item: {q:'text with ___', opts:[...], a:[correctIndex or value]}  (one or more ___ with same opts)
+ free item: {q, check: RegExp, model}
+*/
+let exId=0;
+function renderExercise(ex){
+  const id='ex'+(++exId);
+  let h = `<div class="card" id="${id}"><h3>${ex.title}</h3>`;
+  if(ex.hint) h+=`<p class="hint">${ex.hint}</p>`;
+  if(ex.scene) h+=`<div class="scene">${ex.scene}</div>`;
+  if(ex.table) h+=ex.table;
+  h+='<ol class="items">';
+  ex.items.forEach((it,i)=>{
+    let q = it.q;
+    let b=0;
+    const fields=[];
+    q = q.replace(/___/g,()=>{
+      const k=b++;
+      if(ex.type==='select' || it.opts){
+        const opts = it.opts || ex.opts;
+        return `<select class="f" data-i="${i}" data-b="${k}"><option value="">…</option>${opts.map(o=>`<option>${esc(o)}</option>`).join('')}</select>`;
+      }
+      return `<input class="f${(it.w||ex.w)?' w':''}" data-i="${i}" data-b="${k}" autocomplete="off" autocapitalize="off" spellcheck="false">`;
+    });
+    const sayBtn = it.say ? `<button class="say" onclick="sayEn(${esc(JSON.stringify(it.say))})">🔊</button>` : '';
+    h+=`<li><span class="num">${it.n||(i+1)}</span> ${sayBtn} ${q}<span class="fix" data-fix="${i}"></span></li>`;
+  });
+  h+=`</ol><div class="actions"><button class="btn" data-act="check">✅ Проверить</button><button class="btn ghost" data-act="show">👀 Ответы</button><button class="btn ghost" data-act="reset">↺ Заново</button><span class="score"></span></div></div>`;
+  setTimeout(()=>bindExercise(id,ex),0);
+  return h;
+}
+function bindExercise(id,ex){
+  const root=document.getElementById(id); if(!root) return;
+  const fields=()=>[...root.querySelectorAll('.f')];
+  const accFor=(it,b)=>{
+    if(it.check) return [it.check];
+    const a = it.a[b];
+    return Array.isArray(a)?a:[a];
+  };
+  root.querySelector('[data-act=check]').onclick=()=>{
+    let ok=0,total=0;
+    fields().forEach(f=>{
+      const it=ex.items[+f.dataset.i]; const b=+f.dataset.b;
+      total++;
+      const good = f.value.trim()!=='' && matches(f.value, accFor(it,b));
+      f.classList.toggle('ok',good); f.classList.toggle('bad',!good);
+      if(good) ok++;
+    });
+    const s=root.querySelector('.score');
+    s.textContent = `${ok} / ${total}` + (ok===total?' 🎉 Great job!':'');
+  };
+  root.querySelector('[data-act=show]').onclick=()=>{
+    ex.items.forEach((it,i)=>{
+      const fx=root.querySelector(`[data-fix="${i}"]`);
+      const shown = it.model || (it.a||[]).map(a=>Array.isArray(a)?(a[0] instanceof RegExp?'':a[0]):a).join(' / ');
+      fx.textContent = shown ? ' → '+shown : '';
+    });
+  };
+  root.querySelector('[data-act=reset]').onclick=()=>{
+    fields().forEach(f=>{f.value='';f.classList.remove('ok','bad')});
+    root.querySelectorAll('.fix').forEach(x=>x.textContent='');
+    root.querySelector('.score').textContent='';
+  };
+}
+
+/* ============ Helpers for content ============ */
+const N1 = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+const TENS = {20:'twenty',30:'thirty',40:'forty',50:'fifty',60:'sixty',70:'seventy',80:'eighty',90:'ninety',100:'one hundred'};
+function numWord(n){ if(n<20) return N1[n]; if(TENS[n]) return TENS[n]; const t=Math.floor(n/10)*10; return TENS[t]+'-'+N1[n%10]; }
+const numAcc = n => [numWord(n), numWord(n).replace('-',' '), ...(n===100?['a hundred','hundred']:[])];
+const DAYS=[['Monday','dilluns','понедельник'],['Tuesday','dimarts','вторник'],['Wednesday','dimecres','среда'],['Thursday','dijous','четверг'],['Friday','divendres','пятница'],['Saturday','dissabte','суббота'],['Sunday','diumenge','воскресенье']];
+const MONTHS=[['January','gener','январь'],['February','febrer','февраль'],['March','març','март'],['April','abril','апрель'],['May','maig','май'],['June','juny','июнь'],['July','juliol','июль'],['August','agost','август'],['September','setembre','сентябрь'],['October','octubre','октябрь'],['November','novembre','ноябрь'],['December','desembre','декабрь']];
+const ABC_SCHOOL = {A:'Ei',B:'Bi',C:'Ci',D:'Di',E:'I',F:'Ef',G:'Yi',H:'Eich',I:'Ai',J:'Jei',K:'Kei',L:'El',M:'Em',N:'En',O:'Ou',P:'Pi',Q:'Kiu',R:'Ar',S:'Es',T:'Ti',U:'Iu',V:'Vi',W:'Dabliu',X:'Ex',Y:'Uai',Z:'Zi'};
+const ANIMALS=[['scorpion','escorpí','скорпион','🦂'],['dolphin','dofí','дельфин','🐬'],['snake','serp','змея','🐍'],['frog','granota','лягушка','🐸'],['parrot','lloro','попугай','🦜'],['lizard','llangardaix','ящерица','🦎'],['butterfly','papallona','бабочка','🦋'],['worm','cuc','червяк','🪱']];
+const ADJ=[['dangerous','perillós','опасный'],['colourful','colorit','разноцветный, яркий'],['slimy','llefiscós','склизкий, слизистый'],['friendly','simpàtic','дружелюбный'],['scary','que fa por','страшный'],['quiet','silenciós','тихий'],['noisy','sorollós','шумный'],['big','gran','большой'],['small','petit','маленький'],['long','llarg','длинный'],['short','curt','короткий'],['calm','tranquil','спокойный'],['excited','emocionat, excitat','взволнованный, возбуждённый']];
+function wordTable(rows, emoji){
+  return `<div class="tw"><table class="t"><tr><th>English</th><th>Русский</th><th>Català</th></tr>${rows.map(r=>`<tr><td>${emoji&&r[3]?r[3]+' ':''}<span class="en">${r[0]}</span><button class="say" onclick="sayEn('${r[0]}')">🔊</button></td><td>${r[2]}</td><td>${r[1]}</td></tr>`).join('')}</table></div>`;
+}
+function shuffle(a,seed){ a=a.slice(); let s=seed||7; for(let i=a.length-1;i>0;i--){ s=(s*9301+49297)%233280; const j=Math.floor(s/233280*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const YN_IT=['Yes, it is.','No, it isn’t.'], YN_THEY=['Yes, they are.','No, they aren’t.'];
+const YN_ALL=[...YN_IT,...YN_THEY];
+
+/* ============ CONTENT ============ */
+const TOPICS = [
+/* ---------------- 1. ALPHABET ---------------- */
+{ id:'alphabet', emoji:'🔤', title:'Alphabet', ru:'Алфавит и спеллинг',
+  theory:{
+    en:`The English alphabet has twenty-six letters. Each letter has a name. Listen: A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z.
+Be careful with the vowels. A sounds like "ay". E sounds like "ee". I sounds like "eye".
+G and J are easy to mix up. G sounds like "jee". J sounds like "jay".
+To spell a word, say its letters one by one. Apple: A, P, P, L, E.`,
+    ru:`В английском алфавите двадцать шесть букв. У каждой буквы есть своё имя.
+Осторожно с гласными! Буква {A} звучит как «эй». Буква {E} звучит как «и». Буква {I} звучит как «ай».
+Часто путают {G} и {J}: {G} — это «джи», а {J} — это «джей».
+Сказать слово по буквам — по-английски {to spell}. Называем буквы по очереди: {Apple: A, P, P, L, E}.
+Нажми на любую букву в таблице ниже, чтобы услышать её имя.`,
+    ca:`L'alfabet anglès té vint-i-sis lletres. Cada lletra té el seu nom.
+Compte amb les vocals! La lletra {A} sona com «ei». La lletra {E} sona com «i». La lletra {I} sona com «ai».
+Sovint es confonen la {G} i la {J}: la {G} sona «yi» i la {J} sona «jei».
+Lletrejar una paraula, en anglès, és {to spell}. Diem les lletres una per una: {Apple: A, P, P, L, E}.
+Toca qualsevol lletra de la taula per sentir el seu nom.`
+  },
+  extra:()=>`<div class="card"><h3>Нажми на букву 🔊</h3><div class="abc">${Object.keys(ABC_SCHOOL).map(L=>`<button onclick="sayEn('${L}')">${L}<small>${ABC_SCHOOL[L]}</small></button>`).join('')}</div></div>`,
+  book:[
+    {title:'Как в тетради: Alphabet', hint:'В тетради буквы записаны «как слышим» (Ei, Bi, Ci…). Выбери, какая это буква.', type:'select',
+      opts:Object.keys(ABC_SCHOOL),
+      items:['Ei','I','Ai','Yi','Jei','Eich','Kiu','Ar','Iu','Dabliu','Uai','Zi'].map(s=>({q:`<b>${s}</b> = ___`, a:[[Object.keys(ABC_SCHOOL).find(k=>ABC_SCHOOL[k]===s)]]}))},
+    {title:'Spelling example', hint:'Как в тетради: APPLE → ei - pi - pi - el - i. Какое слово здесь?', w:1,
+      items:[
+        {q:'ei - pi - pi - el - i → ___', a:[['apple']], say:'A, P, P, L, E'},
+        {q:'ef - ar - ou - yi → ___', a:[['frog']], say:'F, R, O, G'},
+        {q:'es - en - ei - kei - i → ___', a:[['snake']], say:'S, N, A, K, E'},
+        {q:'dabliu - ou - ar - em → ___', a:[['worm']], say:'W, O, R, M'},
+      ]}
+  ],
+  more:[
+    {title:'Listen and write ✍️', hint:'Нажми 🔊: слово произносится по буквам. Напиши слово.', w:1,
+      items:[['cat','C, A, T'],['dog','D, O, G'],['lion','L, I, O, N'],['parrot','P, A, R, R, O, T'],['lizard','L, I, Z, A, R, D'],['dolphin','D, O, L, P, H, I, N'],['butterfly','B, U, T, T, E, R, F, L, Y'],['scorpion','S, C, O, R, P, I, O, N']]
+        .map(([w,s])=>({q:'___', a:[[w]], say:s}))},
+    {title:'Which letter? 👂', hint:'Нажми 🔊 и напиши букву, которую услышала.',
+      items:['E','I','A','G','J','R','Y','H','W','Q'].map(L=>({q:'___', a:[[L]], say:L}))}
+  ]
+},
+/* ---------------- 2. NUMBERS ---------------- */
+{ id:'numbers', emoji:'🔢', title:'Numbers 1–100', ru:'Числа от 1 до 100',
+  theory:{
+    en:`From one to twelve, numbers have their own names: one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve.
+From thirteen to nineteen, we add teen: thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen.
+Tens end in ty: twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety. And then: one hundred.
+For other numbers, join the ten and the unit with a hyphen: twenty-three, forty-eight, ninety-six.
+Be careful with spelling. Three is T, H, R, E, E. But thirteen and thirty start with T, H, I, R.
+Four has a U, but forty has no U. Eighteen and eighty have only one T.`,
+    ru:`От одного до двенадцати у чисел свои названия: {one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve}.
+С тринадцати до девятнадцати добавляем хвостик {teen}: {thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen}.
+Десятки заканчиваются на {ty}: {twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety}. Сто — {one hundred}.
+Остальные числа собираем из десятка и единиц через чёрточку-дефис: {twenty-three}, {forty-eight}, {ninety-six}.
+Ловушки в написании. {Three} пишется {T, H, R, E, E}, а {thirteen} и {thirty} начинаются с {T, H, I, R}.
+В {four} есть буква {U}, а в {forty} её нет. В {eighteen} и {eighty} только одна буква {T}.
+Не путай: {thirteen} — тринадцать, а {thirty} — тридцать.`,
+    ca:`De l'u al dotze, els números tenen nom propi: {one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve}.
+Del tretze al dinou afegim la cueta {teen}: {thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen}.
+Les desenes acaben en {ty}: {twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety}. El cent és {one hundred}.
+Els altres números s'escriuen amb la desena i la unitat unides amb un guionet: {twenty-three}, {forty-eight}, {ninety-six}.
+Compte amb l'ortografia. {Three} s'escriu {T, H, R, E, E}, però {thirteen} i {thirty} comencen per {T, H, I, R}.
+{Four} té una {U}, però {forty} no en té. {Eighteen} i {eighty} només tenen una {T}.
+No confonguis {thirteen}, tretze, amb {thirty}, trenta.`
+  },
+  extra:()=>`<div class="card"><h3>Послушай числа 🔊</h3><div class="abc">${[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,30,40,50,60,70,80,90,100].map(n=>`<button onclick="sayEn('${numWord(n)}')">${n}<small>${numWord(n)}</small></button>`).join('')}</div></div>`,
+  book:[
+    {title:'Write the following numbers in words', hint:'Напиши числа словами.',
+      items:[...Array.from({length:20},(_,i)=>i+1),30,40,50,60,70,80,90,100].map(n=>({n, q:'___', a:[numAcc(n)]}))},
+    {title:'Read and match', type:'select', opts:['Sixteen','Twenty-three','Eleven','Fourteen','Thirty-five','Eighty','Ninety-six'],
+      items:[80,23,14,35,96,11,16].map(n=>({n, q:'___', a:[[numWord(n).replace(/^./,c=>c.toUpperCase())]]}))},
+    {title:'Write the numbers', hint:'Напиши цифрами.',
+      items:['Twenty-nine','Eighty-one','Forty-eight','Fifty','Seventeen','Ten','Eighteen','Seventy-seven','Five','Eleven','Thirty-two','Fifty-five','Forty','Sixty-three','Nineteen','Eight']
+        .map(w=>({q:`${w}: ___`, a:[[String([...Array(101).keys()].find(n=>numWord(n)===w.toLowerCase()))]]}))},
+    {title:'Complete the crossword', hint:'Кроссворд из тетради: напиши числа словами.',
+      items:[33,28,69,94,51,86,75,48].map((n,i)=>({n:i+1, q:`<b>${n}</b> → ___`, a:[numAcc(n)]}))}
+  ],
+  more:[
+    {title:'Listen and write the number 👂', hint:'Нажми 🔊 и напиши цифрами.',
+      items:[13,30,14,40,15,50,18,80,19,90,67,72].map(n=>({q:'___', a:[[String(n)]], say:numWord(n)}))},
+    {title:'Which spelling is right? 🧐', type:'select',
+      items:[
+        {q:'3 = ___', opts:['theree','three','thre'], a:[['three']]},
+        {q:'13 = ___', opts:['thurteen','threeteen','thirteen'], a:[['thirteen']]},
+        {q:'40 = ___', opts:['fourty','forty','fortee'], a:[['forty']]},
+        {q:'15 = ___', opts:['fiveteen','fifteen','fivteen'], a:[['fifteen']]},
+        {q:'80 = ___', opts:['eightty','eighty','eigty'], a:[['eighty']]},
+        {q:'12 = ___', opts:['twelf','twelve','tweleve'], a:[['twelve']]},
+        {q:'20 = ___', opts:['twenty','twentee','tweny'], a:[['twenty']]},
+      ]},
+    {title:'Maths in English ➕', hint:'Ответ напиши словами.',
+      items:[[10,5],[20,3],[40,8],[6,6],[50,50],[30,9]].map(([a,b])=>({q:`${numWord(a)} + ${numWord(b)} = ___`, a:[numAcc(a+b)]}))}
+  ]
+},
+/* ---------------- 3. DAYS ---------------- */
+{ id:'days', emoji:'📅', title:'Days of the week', ru:'Дни недели',
+  theory:{
+    en:`There are seven days in a week: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.
+In English, days of the week always start with a capital letter.
+Saturday and Sunday are the weekend.
+We say: on Monday, on Friday.`,
+    ru:`В неделе семь дней: {Monday} — понедельник, {Tuesday} — вторник, {Wednesday} — среда, {Thursday} — четверг, {Friday} — пятница, {Saturday} — суббота, {Sunday} — воскресенье.
+В английском дни недели всегда пишутся с большой буквы.
+Суббота и воскресенье — это {the weekend}, выходные.
+«В понедельник» по-английски — {on Monday}.
+Подсказка: в слове {Wednesday} есть буква {d}, которую не произносят.`,
+    ca:`Una setmana té set dies: {Monday} és dilluns, {Tuesday} és dimarts, {Wednesday} és dimecres, {Thursday} és dijous, {Friday} és divendres, {Saturday} és dissabte i {Sunday} és diumenge.
+En anglès, els dies de la setmana sempre s'escriuen amb majúscula.
+Dissabte i diumenge són {the weekend}, el cap de setmana.
+«El dilluns» en anglès és {on Monday}.
+Pista: a la paraula {Wednesday} hi ha una {d} que no es pronuncia.`
+  },
+  extra:()=>`<div class="card"><h3>Days of the week</h3>${wordTable(DAYS)}</div>`,
+  book:[
+    {title:'Days of the week: English ↔ Català', hint:'Напиши день недели по-английски (с большой буквы).',
+      items:DAYS.map(d=>({q:`${d[1]} = ___`, a:[[d[0]]]}))}
+  ],
+  more:[
+    {title:'What day comes next? ➡️',
+      items:[0,2,4,5,6,3].map(i=>({q:`After ${DAYS[i][0]} comes ___`, a:[[DAYS[(i+1)%7][0]]]}))},
+    {title:'Missing letters 🔍', hint:'Напиши слово целиком.',
+      items:[['W _ d n e s d _ y','Wednesday'],['T h _ r s d a _','Thursday'],['T _ e s d a y','Tuesday'],['S a t _ r d a y','Saturday'],['F r _ d a y','Friday']]
+        .map(([m,w])=>({q:`<span class="letters">${m}</span> → ___`, a:[[w]]}))}
+  ]
+},
+/* ---------------- 4. MONTHS ---------------- */
+{ id:'months', emoji:'🗓️', title:'Months of the year', ru:'Месяцы',
+  theory:{
+    en:`There are twelve months in a year: January, February, March, April, May, June, July, August, September, October, November, December.
+Months always start with a capital letter.
+We say: in January, in May.
+Four months end in B, E, R: September, October, November, December.`,
+    ru:`В году двенадцать месяцев: {January, February, March, April, May, June, July, August, September, October, November, December}.
+Месяцы, как и дни недели, пишутся с большой буквы.
+«В мае» по-английски — {in May}.
+Четыре месяца заканчиваются на {B, E, R}: {September, October, November, December}. На конце буква {R}, а не {T}!
+В {February} и {March} тоже есть буква {R}: {F, E, B, R, U, A, R, Y} и {M, A, R, C, H}.`,
+    ca:`Un any té dotze mesos: {January, February, March, April, May, June, July, August, September, October, November, December}.
+Els mesos, com els dies, en anglès s'escriuen amb majúscula.
+«Al maig» en anglès és {in May}.
+Quatre mesos acaben en {B, E, R}: {September, October, November, December}. Al final hi ha una {R}, no una {T}!
+{February} i {March} també tenen una {R}: {F, E, B, R, U, A, R, Y} i {M, A, R, C, H}.`
+  },
+  extra:()=>`<div class="card"><h3>Months of the year</h3>${wordTable(MONTHS)}</div>`,
+  book:[
+    {title:'Months of the year: English ↔ Català', hint:'Напиши месяц по-английски.',
+      items:MONTHS.map(m=>({q:`${m[1]} = ___`, a:[[m[0]]]}))}
+  ],
+  more:[
+    {title:'R or T? 🧐', hint:'Внимательно с буквой R! Напиши слово целиком.',
+      items:[['Octobe_','October'],['Feb_uary','February'],['Ma_ch','March'],['Janua_y','January'],['Decembe_','December'],['Ap_il','April'],['Septembe_','September']]
+        .map(([m,w])=>({q:`<span class="letters">${m}</span> → ___`, a:[[w]]}))},
+    {title:'What month comes next? ➡️',
+      items:[0,3,6,8,10,11].map(i=>({q:`After ${MONTHS[i][0]} comes ___`, a:[[MONTHS[(i+1)%12][0]]]}))}
+  ]
+},
+/* ---------------- 5. ABOUT ME ---------------- */
+{ id:'aboutme', emoji:'🙋', title:'About me', ru:'Рассказ о себе',
+  theory:{
+    en:`To talk about yourself, answer these questions.
+What's your name? My name's Anna.
+How old are you? I'm eight. Or: I'm eight years old.
+Have you got any brothers and sisters? Yes, I have. I've got a brother.
+Have you got a pet? No, I haven't. I haven't got a pet.
+Where do you live? I live in Barcelona.
+What is your favourite thing? My favourite thing is my bike.`,
+    ru:`Чтобы рассказать о себе, отвечаем на вопросы.
+{What's your name?} — Как тебя зовут? Ответ: {My name's Anna.}
+{How old are you?} — Сколько тебе лет? Ответ: {I'm eight.} Можно добавить {years old}: {I'm eight years old.}
+{Have you got any brothers and sisters?} — У тебя есть братья или сёстры? Ответ: {Yes, I have. I've got a brother.}
+{Have you got a pet?} — У тебя есть домашнее животное? Если нет: {No, I haven't. I haven't got a pet.} Не забудь маленькое слово {a}!
+{Where do you live?} — Где ты живёшь? Ответ: {I live in Barcelona.}
+{What is your favourite thing?} — Какая твоя любимая вещь? Ответ: {My favourite thing is my bike.}`,
+    ca:`Per parlar de tu, respon aquestes preguntes.
+{What's your name?} vol dir com et dius. Resposta: {My name's Anna.}
+{How old are you?} vol dir quants anys tens. Resposta: {I'm eight.} També pots dir {I'm eight years old.}
+{Have you got any brothers and sisters?} vol dir si tens germans o germanes. Resposta: {Yes, I have. I've got a brother.}
+{Have you got a pet?} vol dir si tens una mascota. Si no en tens: {No, I haven't. I haven't got a pet.} No t'oblidis de la paraula {a}!
+{Where do you live?} vol dir on vius. Resposta: {I live in Barcelona.}
+{What is your favourite thing?} vol dir quina és la teva cosa preferida. Resposta: {My favourite thing is my bike.}`
+  },
+  book:[
+    {title:'Look, read and circle', hint:'Тони рассказывает о себе (в тетради — картинка его комнаты: шарф Oxford United, открытки «10», брат, хомяк, футбол). Выбери правильное слово.', type:'select',
+      items:[
+        {q:'My name’s ___.', opts:['Tom','Tony'], a:[['Tony']]},
+        {q:'I’m ___.', opts:['eight','nine','ten'], a:[['ten']]},
+        {q:'I’ve got one ___.', opts:['sister','brother'], a:[['brother']]},
+        {q:'I’ve got a ___.', opts:['hamster','cat'], a:[['hamster']]},
+        {q:'I live in ___.', opts:['Manchester','Oxford'], a:[['Oxford']]},
+        {q:'My favourite thing is ___.', opts:['football','tennis'], a:[['football']]},
+      ]},
+    {title:'Answer the questions for you', hint:'Ответь о себе полным предложением. Проверяется, правильно ли построена фраза.', w:1,
+      items:[
+        {q:'What’s your name?<br>___', check:/^\s*my name(\s+is|['’]s)\s+\S+/i, model:'My name is …'},
+        {q:'How old are you?<br>___', check:/^\s*(i am|i['’]m)\s+\S+(\s+years old)?\s*\.?\s*$/i, model:'I’m eight (years old).'},
+        {q:'Have you got any brothers and sisters?<br>___', check:/^\s*(yes,?\s*i have|no,?\s*i haven['’]t|i['’]ve got|i have got|i haven['’]t got)/i, model:'Yes, I have. / No, I haven’t.'},
+        {q:'Have you got a pet?<br>___', check:/^\s*(yes,?\s*i have|no,?\s*i haven['’]t|i['’]ve got an? |i have got an? |i haven['’]t got an? )/i, model:'No, I haven’t. I haven’t got a pet.'},
+        {q:'Where do you live?<br>___', check:/^\s*i live in\s+\S+/i, model:'I live in Barcelona.'},
+        {q:'What is your favourite thing?<br>___', check:/^\s*my favourite thing is\s+\S+/i, model:'My favourite thing is …'},
+      ]}
+  ],
+  more:[
+    {title:'Match the question and the answer 🔗', type:'select',
+      opts:['My name’s Leo.','I’m nine.','Yes, I have. I’ve got a sister.','No, I haven’t got a pet.','I live in London.','My favourite thing is my ball.'],
+      items:[
+        {q:'What’s your name? ___', a:[['My name’s Leo.']]},
+        {q:'Where do you live? ___', a:[['I live in London.']]},
+        {q:'How old are you? ___', a:[['I’m nine.']]},
+        {q:'What is your favourite thing? ___', a:[['My favourite thing is my ball.']]},
+        {q:'Have you got a pet? ___', a:[['No, I haven’t got a pet.']]},
+        {q:'Have you got any brothers and sisters? ___', a:[['Yes, I have. I’ve got a sister.']]},
+      ]},
+    {title:'Put the words in order 🧩', hint:'Собери предложение.', w:1,
+      items:[
+        ['name / is / My / Mia','My name is Mia'],
+        ['eight / I / am / old / years','I am eight years old'],
+        ['got / a / I / have / cat','I have got a cat'],
+        ['live / in / I / Girona','I live in Girona'],
+        ['got / haven’t / a / I / pet','I haven’t got a pet'],
+      ].map(([s,a])=>({q:`<i>${s}</i><br>___`, a:[[a]]}))}
+  ]
+},
+/* ---------------- 6. VERB TO BE ---------------- */
+{ id:'tobe', emoji:'🧩', title:'Verb to be', ru:'Глагол to be: am / is / are',
+  theory:{
+    en:`The verb to be has three forms in the present: am, is, are.
+I am. He is, she is, it is. We are, you are, they are.
+Short forms: I'm, he's, she's, it's, we're, you're, they're.
+To make a negative sentence, add not. I am not quiet: I'm not quiet. He is not quiet: he isn't quiet. They are not quiet: they aren't quiet.
+To ask a question, put the verb first. Am I quiet? Is he quiet? Are they quiet?
+Short answers: Yes, I am. No, I'm not. Yes, he is. No, he isn't. Yes, they are. No, they aren't.
+In a short yes answer, we don't use the short form. We say: Yes, it is. Not: yes, it's.`,
+    ru:`Глагол {to be} значит «быть, являться». По-русски мы его часто пропускаем: «Я тихий». А в английском он обязателен: {I am quiet}.
+В настоящем времени у него три формы: {am, is, are}.
+{I} — всегда {am}. {He, she, it} — {is}. {We, you, they} — {are}. Помни: {you} — это и «ты», и «вы».
+Короткие формы: {I'm, he's, she's, it's, we're, you're, they're}.
+Отрицание: добавляем {not}. {He is not quiet}, коротко {He isn't quiet}. {They aren't quiet}. {I'm not quiet}. Формы {I amn't} не бывает!
+Вопрос: ставим глагол на первое место. {He is quiet} превращается в {Is he quiet?} {They are quiet} — в {Are they quiet?}
+Короткие ответы: {Yes, he is. No, he isn't. Yes, they are. No, they aren't. Yes, I am. No, I'm not.}
+В коротком ответе «да» не сокращаем: говорим {Yes, it is}, а не {Yes, it's}.`,
+    ca:`El verb {to be} vol dir «ser» o «estar».
+En present té tres formes: {am, is, are}.
+{I} sempre va amb {am}. {He, she, it} van amb {is}. {We, you, they} van amb {are}. Recorda: {you} vol dir «tu» i també «vosaltres».
+Formes curtes: {I'm, he's, she's, it's, we're, you're, they're}.
+Per fer una frase negativa, afegim {not}. {He is not quiet}, en forma curta {He isn't quiet}. {They aren't quiet}. {I'm not quiet}. La forma {I amn't} no existeix!
+Per fer una pregunta, posem el verb al davant. {He is quiet} es converteix en {Is he quiet?} {They are quiet} es converteix en {Are they quiet?}
+Respostes curtes: {Yes, he is. No, he isn't. Yes, they are. No, they aren't. Yes, I am. No, I'm not.}
+A la resposta afirmativa no fem servir la forma curta: diem {Yes, it is}, no {Yes, it's}.`
+  },
+  extra:()=>`<div class="card"><h3>Present sentences — шпаргалка</h3><div class="tw"><table class="t">
+<tr><th></th><th>Рус / Cat</th><th>+</th><th>−</th><th>?</th><th>Answer</th></tr>
+${[['I','я / jo','am','am not','Am I','I am','I’m not'],['You','ты / tu','are','are not','Are you','you are','you aren’t'],['He','он / ell','is','is not','Is he','he is','he isn’t'],['She','она / ella','is','is not','Is she','she is','she isn’t'],['It','оно (животное, вещь) / animal, cosa','is','is not','Is it','it is','it isn’t'],['We','мы / nosaltres','are','are not','Are we','we are','we aren’t'],['You','вы / vosaltres','are','are not','Are you','you are','you aren’t'],['They','они / ells, elles','are','are not','Are they','they are','they aren’t']]
+.map(r=>`<tr><td class="en">${r[0]}</td><td>${r[1]}</td><td>${r[0]} ${r[2]} quiet</td><td>${r[0]} ${r[3]} quiet</td><td>${r[4]} quiet?</td><td>Yes, ${r[5]}. / No, ${r[6]}.</td></tr>`).join('')}
+</table></div></div>`,
+  book:[
+    {title:'Present sentences: fill in the table', hint:'Как в тетради: заполни таблицу для слова quiet. Можно писать полные или короткие формы.', w:1,
+      items:[['I','am','Am I','Yes, I am / No, I am not'],['You','are','Are you','Yes, you are / No, you aren’t'],['He','is','Is he','Yes, he is / No, he isn’t'],['She','is','Is she','Yes, she is / No, she isn’t'],['It','is','Is it','Yes, it is / No, it isn’t'],['We','are','Are we','Yes, we are / No, we aren’t'],['They','are','Are they','Yes, they are / No, they aren’t']]
+        .map(([p,v,qv,ans])=>{
+          const neg = p==='I'?['I am not quiet','I’m not quiet']:[`${p} ${v} not quiet`];
+          const pl=p.toLowerCase(), pa = p==='I'?'i':pl;
+          const yes=[`${pa} ${v}`,`yes ${pa} ${v}`], no=[`${pa} ${v} not`,`no ${pa} ${v} not`];
+          if(p==='You'){ yes.push('I am','yes I am','we are','yes we are'); no.push('I am not','no I am not','we are not','no we are not'); }
+          return {n:p, q:`<b>+</b> ___<br><b>−</b> ___<br><b>?</b> ___<br><b>Answer:</b> Yes, ___. No, ___.`,
+            a:[[`${p} ${v} quiet`],neg,[`${qv} quiet`],yes,no],
+            model:`${p} ${v} quiet · ${neg[neg.length-1]} · ${qv} quiet? · ${ans}`};
+        })},
+    {title:'Complete these sentences with the correct form of the verb to be', hint:'(+) утверждение, (−) отрицание, (?) вопрос. В отрицании пиши короткую форму: isn’t / aren’t / ’m not.',
+      items:[
+        ['a','I ___ (+) very happy today.',['am']],
+        ['b','The snake ___ (−) friendly.',["isn't",'is not']],
+        ['c','___ (?) you sad?',['Are']],
+        ['d','She ___ (+) my best friend.',['is']],
+        ['e','Frogs ___ (−) quiet.',["aren't",'are not']],
+        ['f','The goat ___ (+) very funny.',['is']],
+        ['g','___ (?) he your new teacher?',['Is']],
+        ['h','We ___ (+) in the playground.',['are']],
+        ['i','You ___ (−) from Spain.',["aren't",'are not']],
+        ['j','___ (?) the lizard dangerous?',['Is']],
+        ['k','My parents ___ (+) at home now.',['are']],
+        ['l','The cat ___ (−) under the bed.',["isn't",'is not']],
+        ['m','___ (?) elephants big?',['Are']],
+        ['n','He ___ (+) eight years old.',['is']],
+        ['o','I ___ (−) tired this morning.',["am not","'m not"]],
+        ['p','___ (?) crocodiles scary?',['Are']],
+        ['q','You ___ (+) very friendly!',['are']],
+        ['r','This bird ___ (−) colourful.',["isn't",'is not']],
+        ['s','___ (?) she in the garden?',['Is']],
+        ['t','My friends ___ (+) very noisy.',['are']],
+      ].map(([n,q,a])=>({n:n+')', q, a:[a]}))}
+  ],
+  more:[
+    {title:'am, is or are? 🎯', type:'select', opts:['am','is','are'],
+      items:[['My dog ___ friendly.','is'],['I ___ eight.','am'],['The butterflies ___ colourful.','are'],['We ___ friends.','are'],['It ___ a worm.','is'],['You ___ my sister.','are'],['Polly the parrot ___ noisy.','is'],['Lions ___ dangerous.','are']]
+        .map(([q,a])=>({q, a:[[a]]}))},
+    {title:'Make it negative ➖', hint:'Сделай отрицание.', w:1,
+      items:[['He is sad.',"He isn't sad."],['They are quiet.',"They aren't quiet."],['I am tired.',"I'm not tired."],['The frog is big.',"The frog isn't big."],['We are at school.',"We aren't at school."]]
+        .map(([q,a])=>({q:`${q} → ___`, a:[[a]]}))},
+    {title:'Make a question ❓', hint:'Поставь глагол на первое место.', w:1,
+      items:[['She is happy.','Is she happy?'],['They are scary.','Are they scary?'],['It is slimy.','Is it slimy?'],['You are eight.','Are you eight?'],['The parrots are noisy.','Are the parrots noisy?']]
+        .map(([q,a])=>({q:`${q} → ___`, a:[[a]]}))},
+    {title:'Who is it? 👥', hint:'Выбери английское местоимение.', type:'select', opts:['I','you','he','she','it','we','they'],
+      items:[['я / jo','I'],['она / ella','she'],['мы / nosaltres','we'],['он / ell','he'],['они / ells','they'],['змея (одна) / la serp','it'],['лягушки / les granotes','they']]
+        .map(([q,a])=>({q:`${q} = ___`, a:[[a]]}))}
+  ]
+},
+/* ---------------- 7. ANIMALS ---------------- */
+{ id:'animals', emoji:'🦎', title:'Animals & adjectives', ru:'Unit 1: животные и прилагательные',
+  theory:{
+    en:`Animals: scorpion, dolphin, snake, frog, parrot, lizard, butterfly, worm.
+Words to describe animals: dangerous, colourful, slimy, friendly, scary, quiet, noisy.
+Opposites: big and small. Long and short. Quiet and noisy. Calm and excited.
+One animal: a frog. Two or more animals: frogs. We add S. But butterfly changes: butterflies.
+We can describe animals: It can swim. It can fly. It's got four legs. It's got two wings and a long tail.`,
+    ru:`Животные: {scorpion} — скорпион, {dolphin} — дельфин, {snake} — змея, {frog} — лягушка, {parrot} — попугай, {lizard} — ящерица, {butterfly} — бабочка, {worm} — червяк.
+Слова-описания: {dangerous} — опасный, {colourful} — разноцветный, {slimy} — склизкий, {friendly} — дружелюбный, {scary} — страшный, {quiet} — тихий, {noisy} — шумный.
+Пары-противоположности: {big} — {small}, большой и маленький. {long} — {short}, длинный и короткий. {quiet} — {noisy}. {calm} — {excited}, спокойный и взволнованный.
+Одно животное: {a frog}. Много: {frogs} — добавляем {S}. А {butterfly} меняется: {butterflies}.
+Как описать животное: {It can swim} — оно умеет плавать. {It can fly} — умеет летать. {It's got four legs} — у него четыре лапы. {It's got two wings} — у него два крыла. {a big tail} — большой хвост.`,
+    ca:`Animals: {scorpion} és escorpí, {dolphin} és dofí, {snake} és serp, {frog} és granota, {parrot} és lloro, {lizard} és llangardaix, {butterfly} és papallona, {worm} és cuc.
+Paraules per descriure: {dangerous} és perillós, {colourful} és colorit, {slimy} és llefiscós, {friendly} és simpàtic, {scary} és que fa por, {quiet} és silenciós, {noisy} és sorollós.
+Parelles de contraris: {big} i {small}, gran i petit. {long} i {short}, llarg i curt. {quiet} i {noisy}. {calm} i {excited}, tranquil i emocionat.
+Un animal: {a frog}. Molts: {frogs}, afegim una {S}. Però {butterfly} canvia: {butterflies}.
+Per descriure un animal: {It can swim}, sap nedar. {It can fly}, sap volar. {It's got four legs}, té quatre potes. {It's got two wings}, té dues ales. {a big tail}, una cua gran.`
+  },
+  extra:()=>`<div class="card"><h3>Animals</h3>${wordTable(ANIMALS,true)}</div><div class="card"><h3>Adjectives</h3>${wordTable(ADJ)}</div>`,
+  book:[
+    {title:'Read and write', hint:'Отгадай животное.',
+      items:[['It can swim and jump. It’s small. It’s got four legs.','frog'],['It’s small. It’s got six legs and four wings.','butterfly'],['It can fly. It’s got two wings and two legs.','parrot'],['It’s small. It’s got four legs and a big tail.','lizard'],['It can swim and jump. It’s got a big tail.','dolphin']]
+        .map(([q,a])=>({q:`${q} ___`, a:[[a,'a '+a]], say:q}))},
+    {title:'Look and write', hint:'Собери слово из букв. Варианты: friendly, scary, dangerous, slimy, colourful.',
+      items:[['🕷️','c r y a s','scary'],['🐕','d y e i f n r l','friendly'],['🐂','e o r a n u d g s','dangerous'],['🐦 (колибри)','l c f o u u r o l','colourful'],['🐌','y l i m s','slimy']]
+        .map(([p,l,a])=>({q:`<span class="pic">${p}</span> <span class="letters">${l}</span> → It’s ___.`, a:[[a]]}))}
+  ],
+  more:[
+    {title:'Català → English 🔁',
+      items:shuffle(ANIMALS,3).map(r=>({q:`${r[1]} = ___`, a:[[r[0]]]}))},
+    {title:'Opposites ↔️', type:'select', opts:['small','short','noisy','excited','big','long','quiet','calm'],
+      items:[['big','small'],['long','short'],['quiet','noisy'],['calm','excited'],['small','big'],['noisy','quiet']].map(([w,a])=>({q:`${w} ↔ ___`, a:[[a]]}))},
+    {title:'Who am I? 🕵️', hint:'Новые загадки.',
+      items:[['It’s long. It hasn’t got legs. It’s scary.','snake'],['It’s small and slimy. It lives in the ground.','worm'],['It’s small. It’s got eight legs and a tail. It’s dangerous.','scorpion'],['It’s colourful and noisy. It can talk!','parrot'],['It can swim. It’s big and friendly.','dolphin']]
+        .map(([q,a])=>({q:`${q} ___`, a:[[a,'a '+a]], say:q}))},
+    {title:'One or many? 🔢', hint:'Напиши множественное число.',
+      items:[['frog','frogs'],['snake','snakes'],['butterfly','butterflies'],['parrot','parrots'],['worm','worms']].map(([w,a])=>({q:`one ${w} → two ___`, a:[[a]]}))}
+  ]
+},
+/* ---------------- 8. IT'S / THEY'RE ---------------- */
+{ id:'itsthey', emoji:'🐍', title:'It’s / They’re', ru:'It’s, It isn’t, They’re, They aren’t',
+  theory:{
+    en:`For one animal, we say it. For two or more animals, we say they.
+It's means it is. It isn't means it is not.
+They're means they are. They aren't means they are not.
+This is my snake. It's long. It isn't short.
+These are my parrots. They're noisy. They aren't quiet.
+This goes with it. These goes with they.
+One animal needs the word a: It's a parrot. Many animals need an S: They're lions.`,
+    ru:`Про одно животное говорим {it} («оно»). Про двух и больше — {they} («они»).
+{It's} = {it is}. {It isn't} = {it is not}.
+{They're} = {they are}. {They aren't} = {they are not}.
+{This is my snake} — это моя змея (одна). {It's long. It isn't short.}
+{These are my parrots} — это мои попугаи (много). {They're noisy. They aren't quiet.}
+{This} дружит с {it}, а {these} — с {they}.
+С одним животным нужно словечко {a}: {It's a parrot}. С несколькими — буква {S} на конце: {They're lions}.
+И пиши целое предложение: не просто {quiet}, а {It's quiet.}`,
+    ca:`Per a un animal diem {it}. Per a dos o més animals diem {they}, «ells».
+{It's} vol dir {it is}. {It isn't} vol dir {it is not}.
+{They're} vol dir {they are}. {They aren't} vol dir {they are not}.
+{This is my snake}, aquesta és la meva serp. {It's long. It isn't short.}
+{These are my parrots}, aquests són els meus lloros. {They're noisy. They aren't quiet.}
+{This} va amb {it}, i {these} va amb {they}.
+Amb un sol animal cal la paraula {a}: {It's a parrot}. Amb molts, una {S} al final: {They're lions}.
+I escriu una frase sencera: no només {quiet}, sinó {It's quiet.}`
+  },
+  book:[
+    {title:'Read and write', hint:'Используй: They’re · They aren’t · It’s · It isn’t.', scene:'<span class="pic">🐍</span> “This is my snake.” (змея спит, свернувшись)<br><span class="pic">🦜🦜</span> “These are my parrots.” (попугаи кричат, машут крыльями)', type:'select',
+      opts:['It’s','It isn’t','They’re','They aren’t'],
+      items:[
+        {q:'___ long. ___ short.', a:[['It’s'],['It isn’t']]},
+        {q:'___ noisy. ___ quiet.', a:[['It isn’t'],['It’s']]},
+        {q:'___ calm. ___ excited.', a:[['It’s'],['It isn’t']]},
+        {q:'___ noisy. ___ quiet.', a:[['They’re'],['They aren’t']]},
+        {q:'___ small. ___ big.', a:[['They aren’t'],['They’re']]},
+        {q:'___ calm. ___ excited.', a:[['They aren’t'],['They’re']]},
+      ]},
+    {title:'Look at the pictures and complete (контрольная)', hint:'Пиши It’s, It isn’t, They’re, They aren’t или название животного.',
+      items:[
+        {n:'🦁🦁', q:'They’re ___. ___ brown. ___ big. ___ small.', a:[['lions'],["They're",'they are'],["They're",'they are'],["They aren't",'they are not']]},
+        {n:'🦜', q:'It’s a ___. ___ orange, green and yellow. ___ quiet. ___ noisy.', a:[['parrot'],["It's",'it is'],["It isn't",'it is not'],["It's",'it is']]},
+        {n:'🐍', q:'It’s a ___. ___ brown and yellow. ___ long. ___ short.', a:[['snake'],["It's",'it is'],["It's",'it is'],["It isn't",'it is not']]},
+      ]},
+    {title:'Now write about your favourite animal', hint:'Напиши своё любимое животное и два предложения: одно с It’s (+), другое с It isn’t (−).', w:1,
+      items:[
+        {q:'My favourite animal is ___.', check:/^\s*(an?\s+)?[a-z]+\s*\.?\s*$/i, model:'a giraffe'},
+        {q:'+ ___', check:/^\s*(it['’]s|it is)\s+\w+/i, model:'It’s tall.'},
+        {q:'− ___', check:/^\s*(it isn['’]t|it is not|it['’]s not)\s+\w+/i, model:'It isn’t noisy.'},
+      ]}
+  ],
+  more:[
+    {title:'It’s or They’re? 👀', type:'select', opts:['It’s','They’re'],
+      items:[['🐸','green'],['🦋🦋🦋','colourful'],['🐬','friendly'],['🦂🦂','scary'],['🪱','slimy'],['🐍🐍','long']]
+        .map(([p,adj])=>({q:`<span class="pic">${p}</span> ___ ${adj}.`, a:[[[...p].filter(c=>c.trim()).length>1?'They’re':'It’s']]}))},
+    {title:'Say the opposite ➖', hint:'Напиши отрицание с противоположным словом.', w:1,
+      items:[['It’s big.','small',"It isn't small."],['They’re noisy.','quiet',"They aren't quiet."],['It’s long.','short',"It isn't short."],['They’re calm.','excited',"They aren't excited."]]
+        .map(([q,o,a])=>({q:`${q} → ___ (${o})`, a:[[a]]}))},
+    {title:'This is / These are 📸', type:'select', opts:['This is','These are'],
+      items:[['my frog.','This is'],['my butterflies.','These are'],['my lizard.','This is'],['my worms.','These are'],['my dolphins.','These are']]
+        .map(([q,a])=>({q:`___ ${q}`, a:[[a]]}))}
+  ]
+},
+/* ---------------- 9. QUESTIONS ---------------- */
+{ id:'questions', emoji:'❓', title:'Is it…? Are they…?', ru:'Вопросы и короткие ответы',
+  theory:{
+    en:`To ask about one animal, start with is: Is it dangerous? Is the elephant big?
+To ask about two or more animals, start with are: Are they friendly? Are parrots orange?
+Look at the first word of the question. If it is is, answer with it. If it is are, answer with they.
+Is it slimy? Yes, it is. No, it isn't.
+Are they scary? Yes, they are. No, they aren't.`,
+    ru:`Спрашиваем про одно животное — начинаем с {Is}: {Is it dangerous?} {Is the elephant big?}
+Про двух и больше — начинаем с {Are}: {Are they friendly?} {Are parrots orange?}
+Главный секрет: посмотри на первое слово вопроса. Если там {Is} — отвечай с {it}. Если {Are} — отвечай с {they}.
+{Is it slimy?} — {Yes, it is.} или {No, it isn't.}
+{Are they scary?} — {Yes, they are.} или {No, they aren't.}
+Даже если в вопросе {Are two dolphins...?}, в ответе всё равно {they}: {Yes, they are.}`,
+    ca:`Per preguntar per un animal, comencem amb {Is}: {Is it dangerous?} {Is the elephant big?}
+Per preguntar per dos o més animals, comencem amb {Are}: {Are they friendly?} {Are parrots orange?}
+El gran secret: mira la primera paraula de la pregunta. Si és {Is}, respon amb {it}. Si és {Are}, respon amb {they}.
+{Is it slimy?} Resposta: {Yes, it is.} o {No, it isn't.}
+{Are they scary?} Resposta: {Yes, they are.} o {No, they aren't.}
+Encara que la pregunta digui {Are two dolphins...?}, a la resposta diem {they}: {Yes, they are.}`
+  },
+  book:[
+    {title:'Read, follow and answer', hint:'В тетради вопросы соединены линиями с картинками. Ответь коротким ответом.', type:'select', opts:YN_ALL,
+      items:[
+        ['Is it dangerous?','🐬','No, it isn’t.'],
+        ['Is it big?','🐍 (большая змея)','Yes, it is.'],
+        ['Is it colourful?','🦜','Yes, it is.'],
+        ['Are they friendly?','🐸🐸','Yes, they are.'],
+        ['Is it slimy?','🪱','Yes, it is.'],
+        ['Is it small?','🦎','Yes, it is.'],
+        ['Are they small?','🦋🦋','Yes, they are.'],
+        ['Are they scary?','🦂🦂','Yes, they are.'],
+      ].map(([q,p,a])=>({q:`${q} <span class="pic">${p}</span> ___`, a:[[a]]}))},
+    {title:'Write the questions. Look and answer', hint:'Картинка: 1 — два дельфина 🐬🐬, 2 — попугай 🦜, 3 — две ящерицы 🦎🦎 (улыбаются), 4 — лягушка 🐸, 5 — бабочки 🦋🦋🦋, 6 — червяк 🪱.', w:1,
+      items:[
+        {q:'they • small → ___? ___', a:[['Are they small'],["No, they aren't"]]},
+        {q:'it • colourful → ___? ___', a:[['Is it colourful'],["Yes, it is"]]},
+        {q:'they • friendly → ___? ___', a:[['Are they friendly'],["Yes, they are","No, they aren't"]]},
+        {q:'it • dangerous → ___? ___', a:[['Is it dangerous'],["No, it isn't"]]},
+        {q:'they • scary → ___? ___', a:[['Are they scary'],["No, they aren't"]]},
+        {q:'it • slimy → ___? ___', a:[['Is it slimy'],["Yes, it is"]]},
+      ]},
+    {title:'Answer these questions looking at the picture (контрольная)', hint:'Смотри на описание картинки.', type:'select', opts:YN_ALL,
+      scene:'🌳 На дереве: зелёный попугай 🦜 и ящерица 🦎. Наверху в небе — два дельфина 🐬🐬, под ними — гепард (в задании его называют tiger 🐆). 🐘 Большой серый слон. 🦂 Скорпион сидит на куче камней. 🦁 Лев сидит рядом с гепардом. Попугаи зелёные. Все стоят на траве, пляжа нет.',
+      items:[
+        ['a)','Is the elephant big?',['Yes, it is.']],
+        ['b)','Are two dolphins above the tiger?',['Yes, they are.']],
+        ['c)','Is the lizard on the tree?',['Yes, it is.']],
+        ['d)','Is the scorpion under the rock?',['No, it isn’t.','Yes, it is.']],
+        ['e)','Is the tiger next to the lion?',['Yes, it is.']],
+        ['f)','Are parrots orange?',['No, they aren’t.']],
+        ['g)','Is the elephant pink?',['No, it isn’t.']],
+        ['h)','Are animals on the beach?',['No, they aren’t.']],
+      ].map(([n,q,a])=>({n, q:`${q} ___`, a:[a]}))}
+  ],
+  more:[
+    {title:'Is or Are? 🎯', type:'select', opts:['Is','Are'],
+      items:[['the frog green?','Is'],['the butterflies colourful?','Are'],['it noisy?','Is'],['they dangerous?','Are'],['the worm long?','Is'],['dolphins friendly?','Are']]
+        .map(([q,a])=>({q:`___ ${q}`, a:[[a]]}))},
+    {title:'Answer with the right word: it or they? 🧠', hint:'Ответ «да».', type:'select', opts:YN_ALL,
+      items:[['Is the snake long?','Yes, it is.'],['Are the frogs slimy?','Yes, they are.'],['Are two parrots noisy?','Yes, they are.'],['Is the lion scary?','Yes, it is.'],['Are the scorpions dangerous?','Yes, they are.']]
+        .map(([q,a])=>({q:`${q} ___`, a:[[a]]}))},
+    {title:'Make the question 🧩', hint:'Собери вопрос и ответь по картинке.', w:1,
+      items:[
+        {q:'<span class="pic">🐸</span> it • slimy → ___? ___', a:[['Is it slimy'],['Yes, it is']]},
+        {q:'<span class="pic">🦋🦋</span> they • dangerous → ___? ___', a:[['Are they dangerous'],["No, they aren't"]]},
+        {q:'<span class="pic">🐬</span> it • friendly → ___? ___', a:[['Is it friendly'],['Yes, it is']]},
+        {q:'<span class="pic">🦂🦂</span> they • scary → ___? ___', a:[['Are they scary'],['Yes, they are']]},
+        {q:'<span class="pic">🪱</span> it • big → ___? ___', a:[['Is it big'],["No, it isn't"]]},
+      ]}
+  ]
+},
+/* ---------------- 10. WHERE ---------------- */
+{ id:'where', emoji:'📍', title:'on, under, next to, above', ru:'Где? Предлоги места',
+  theory:{
+    en:`To say where an animal is, we use little words.
+On: the lizard is on the tree.
+Under: the cat is under the bed.
+Next to: the tiger is next to the lion.
+Above: the dolphins are above the tiger.
+In: the frog is in the water.`,
+    ru:`Чтобы сказать, где находится животное, используем маленькие слова-предлоги.
+{on} — на: {The lizard is on the tree.} Ящерица на дереве.
+{under} — под: {The cat is under the bed.} Кошка под кроватью.
+{next to} — рядом с: {The tiger is next to the lion.} Тигр рядом со львом.
+{above} — над, выше: {The dolphins are above the tiger.} Дельфины над тигром.
+{in} — в, внутри: {The frog is in the water.} Лягушка в воде.`,
+    ca:`Per dir on és un animal, fem servir paraules petites.
+{on} vol dir a sobre: {The lizard is on the tree.} El llangardaix és a l'arbre.
+{under} vol dir a sota: {The cat is under the bed.} El gat és a sota del llit.
+{next to} vol dir al costat de: {The tiger is next to the lion.} El tigre és al costat del lleó.
+{above} vol dir per damunt de: {The dolphins are above the tiger.} Els dofins són per damunt del tigre.
+{in} vol dir dins: {The frog is in the water.} La granota és dins l'aigua.`
+  },
+  book:[
+    {title:'Из контрольной: where is it?', hint:'Ответь коротким ответом.', type:'select', opts:YN_ALL,
+      scene:'🌳🦎 ящерица на дереве · 🐬🐬 над 🐆 · 🦂 на камнях 🪨 · 🐆 рядом с 🦁',
+      items:[['Is the lizard on the tree?','Yes, it is.'],['Are two dolphins above the tiger?','Yes, they are.'],['Is the scorpion under the rock?','No, it isn’t.'],['Is the tiger next to the lion?','Yes, it is.']]
+        .map(([q,a])=>({q:`${q} ___`, a:[[a]]}))}
+  ],
+  more:[
+    {title:'Where is it? 🔎', hint:'Посмотри на картинку и выбери предлог.', type:'select', opts:['on','under','next to','above','in'],
+      items:[
+        {q:`<div class="box"><span style="left:40%;top:52px">🪨</span><span style="left:40%;top:14px">🐸</span></div>The frog is ___ the rock.`, a:[['on']]},
+        {q:`<div class="box"><span style="left:40%;top:10px">🛏️</span><span style="left:42%;top:66px">🐱</span></div>The cat is ___ the bed.`, a:[['under']]},
+        {q:`<div class="box"><span style="left:30%;top:40px">🦁</span><span style="left:52%;top:40px">🐯</span></div>The tiger is ___ the lion.`, a:[['next to']]},
+        {q:`<div class="box"><span style="left:42%;top:6px">🦋</span><span style="left:40%;top:72px">🌷</span></div>The butterfly is ___ the flower.`, a:[['above']]},
+        {q:`<div class="box"><span style="left:40%;top:40px">🫙</span><span style="left:44%;top:50px;font-size:22px">🪱</span></div>The worm is ___ the jar.`, a:[['in']]},
+      ]},
+    {title:'Write the sentence ✍️', hint:'Напиши предложение целиком.', w:1,
+      items:[
+        {q:'🦜 + 🌳 (on) → ___', a:[['The parrot is on the tree']]},
+        {q:'🦂 + 🪨 (under) → ___', a:[['The scorpion is under the rock']]},
+        {q:'🐸🐸 + 🐍 (next to) → ___', a:[['The frogs are next to the snake']]},
+      ]}
+  ]
+}
+];
+
+/* ============ App / routing ============ */
+let currentLang='ru';
+function home(){
+  return `<header class="top"><span class="tag">ENGLISH</span><h1>Unit 1</h1></header>
+  <p class="hint" style="color:var(--muted)">Выбери тему. В каждой теме: 📖 теория (можно слушать на трёх языках), 📝 задания как в тетради и ⭐ новые задания.</p>
+  <div class="grid">${TOPICS.map((t,i)=>`<a class="topic" href="#${t.id}"><span class="em">${t.emoji}</span><b>${i+1}. ${esc(t.title)}</b><small>${esc(t.ru)}</small></a>`).join('')}</div>
+  <footer>
+  <p><b>Для родителей.</b> Озвучка — встроенный синтезатор речи браузера (Web Speech API). Если на устройстве нет каталанского голоса, текст прочитается другим голосом: на iPhone/iPad голос можно скачать в «Настройки → Универсальный доступ → Устно → Голоса».</p>
+  <p>Источники по грамматике и лексике: <a href="https://dictionary.cambridge.org/grammar/british-grammar/be" target="_blank" rel="noopener">Cambridge Grammar: Be</a> · <a href="https://dictionary.cambridge.org/grammar/british-grammar/contractions" target="_blank" rel="noopener">Cambridge Grammar: Contractions</a> · <a href="https://learnenglishkids.britishcouncil.org/" target="_blank" rel="noopener">British Council LearnEnglish Kids</a> · каталанская лексика: <a href="https://dlc.iec.cat/" target="_blank" rel="noopener">DIEC2, Institut d’Estudis Catalans</a> · озвучка: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API" target="_blank" rel="noopener">MDN Web Speech API</a>.</p>
+  </footer>`;
+}
+function topicPage(t, tab){
+  tab = tab || 'theory';
+  const tabs = `<div class="tabs">${[['theory','📖 Теория'],['book','📝 Как в тетради'],['more','⭐ Новые задания']].map(([k,l])=>`<button class="${k===tab?'on':''}" onclick="go('${t.id}','${k}')">${l}</button>`).join('')}</div>`;
+  let body='';
+  if(tab==='theory'){
+    const L=LANGS[currentLang];
+    const warn = (!hasVoice(L.code) && 'speechSynthesis' in window && voices.length) ? `<div class="warn">На этом устройстве нет голоса «${L.label}» — текст прочитается голосом по умолчанию.</div>`:'';
+    body = `<div class="card theory"><div class="player">${Object.entries(LANGS).map(([k,v])=>`<button class="${k===currentLang?'sel':''}" onclick="setLang('${t.id}','${k}')">${v.label}</button>`).join('')}</div>
+      <div class="player"><button onclick="playTheory('${t.id}')">▶️ Слушать</button><button class="btn ghost" onclick="stopSpeak()">⏹ Стоп</button></div>${warn}
+      <p>${fmt(t.theory[currentLang])}</p></div>` + (t.extra?t.extra():'');
+  } else {
+    body = (t[tab]||[]).map(renderExercise).join('');
+  }
+  const idx = TOPICS.indexOf(t);
+  const nav = `<div class="actions" style="justify-content:space-between">${idx>0?`<a class="back" href="#${TOPICS[idx-1].id}">← ${esc(TOPICS[idx-1].title)}</a>`:'<span></span>'}${idx<TOPICS.length-1?`<a class="back" href="#${TOPICS[idx+1].id}">${esc(TOPICS[idx+1].title)} →</a>`:''}</div>`;
+  return `<a class="back" href="#">← Все темы</a><header class="top"><span class="em" style="font-size:34px">${t.emoji}</span><div><h1>${esc(t.title)}</h1><div style="color:var(--muted)">${esc(t.ru)}</div></div></header>${tabs}${body}${nav}`;
+}
+function playTheory(id){ const t=TOPICS.find(x=>x.id===id); const L=LANGS[currentLang]; speak(t.theory[currentLang], L.code); }
+function setLang(id,l){ currentLang=l; stopSpeak(); render(id,'theory'); }
+function go(id,tab){ stopSpeak(); render(id,tab); window.scrollTo(0,0); }
+function render(id,tab){
+  const app=document.getElementById('app');
+  const t=TOPICS.find(x=>x.id===id);
+  app.innerHTML = t ? topicPage(t,tab) : home();
+}
+function route(){ stopSpeak(); render(location.hash.slice(1)); window.scrollTo(0,0); }
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
