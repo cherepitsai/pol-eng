@@ -24,12 +24,26 @@
   --ok:#4ccf86; --ok-soft:#173826; --bad:#ff7a7a; --bad-soft:#3d1c1c; --en:#7fb2ff;
 }
 .hero{display:flex;align-items:flex-end;gap:10px;margin:0 0 8px}
-.girl{image-rendering:pixelated;flex:none;animation:hop 1.2s steps(2) infinite}
-.girl.happy{animation:jump .5s steps(2) 3}
-.girl.think{animation:shake .4s steps(2) 2}
-@keyframes hop{50%{transform:translateY(-3px)}}
-@keyframes jump{50%{transform:translateY(-12px)}}
-@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.girl{image-rendering:auto;flex:none;transform-origin:50% 100%;user-select:none}
+.g-stand{animation:breathe 1.6s steps(2) infinite}
+.g-chin{animation:sway 2.4s steps(4) infinite}
+.g-flower{animation:breathe 2s steps(2) infinite}
+.g-wonder{animation:tilt 1.8s steps(3) infinite}
+.g-dance{animation:dance .9s steps(4) infinite}
+.g-laugh{animation:laugh .5s steps(2) 4, breathe 1.6s steps(2) 2s infinite}
+.hero.happy .g-dance{animation:dance .6s steps(4) infinite}
+.hero.think .g-wonder{animation:shake .5s steps(2) 2, tilt 1.8s steps(3) 1s infinite}
+.hero{position:relative}
+.hero.happy:after{content:"✨";position:absolute;left:4px;top:-6px;font-size:22px;animation:twinkle .6s steps(2) infinite}
+.hero.think:after{content:"?";position:absolute;left:8px;top:-4px;font:16px 'Press Start 2P',monospace;color:var(--accent);animation:twinkle .8s steps(2) infinite}
+@keyframes breathe{50%{transform:scaleY(1.035)}}
+@keyframes sway{25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
+@keyframes tilt{33%{transform:rotate(-3deg)}66%{transform:rotate(3deg) translateY(-2px)}}
+@keyframes dance{25%{transform:translateY(-8px) rotate(-6deg)}50%{transform:translateY(0) rotate(0)}75%{transform:translateY(-8px) rotate(6deg)}}
+@keyframes laugh{50%{transform:translateY(-12px) scale(1.05,.97)}}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes twinkle{50%{opacity:.2}}
+@media (prefers-reduced-motion: reduce){.girl,.hero:after{animation:none!important}}
 .bubble{position:relative;font-family:'Press Start 2P',ui-monospace,monospace;font-size:11px;line-height:1.6;background:var(--card);color:var(--ink);border:3px solid var(--ink);padding:8px 10px;margin-bottom:22px;box-shadow:3px 3px 0 var(--accent)}
 .bubble:before{content:"";position:absolute;left:-11px;bottom:6px;width:8px;height:8px;background:var(--ink)}
 header.top h1{font-family:'Press Start 2P',system-ui,sans-serif;font-size:20px;line-height:1.4}
@@ -126,53 +140,16 @@ function fmt(text){ // {..} -> blue english
 }
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-/* ============ Pixel girl (16-bit style) ============ */
-const PAL={H:'#f3e2a4',h:'#d6bd72',S:'#f8d5c3',s:'#f2a6a0',K:'#5a3b2a',E:'#3f7fd0',W:'#ffffff',M:'#c2405a',P:'#f6b3c4',p:'#e48ea6',G:'#b9de78',B:'#26201c',T:'#e9a0b0'};
-const BASE=[
-"..H.H.......H.H..H..",
-"...HHH.HHHH.HHHHH...",
-"..HHHHHHHHHHHHHHHHH.",
-"H.HHHHHhHHHHHhHHHHH.",
-".HHHhHHHHHHHHHHhHHHH",
-".HHhHHSHHHShHHSHhHH.",
-".HHSSSSSSSSSSSSSSHH.",
-".HhSSKKSSSSSSKKSShH.",
-"HHhSSWESSSSSSWESShHH",
-".HhSSWESSSSSSWESShH.",
-".HhSsSSSSKSSSSSsShH.",
-".HhSsSSSSSSSSSSsShH.",
-"HH.SSSKMMMMMMKSSS.HH",
-"H..SSSMWWKWWWMSSS..H",
-"H...SSSMMMMMMSSS...H",
-"h....SSSSSSSSSS....h",
-"h......SSSSSS......h",
-"....PPPPSSSSPPPP....",
-"...PPPPPPPPPPPPPP...",
-"..PPPPPPPPPPPPPPPP..",
-"..PPPPBBBPPBBBPPPP..",
-".PPPPBGGBPPBGGBPPPP.",
-".SPPPBGGGBBGGGBPPPS.",
-".SPPPPBGGBBGGBPPPPS.",
-".SPPPPPBBPPBBPPPPPS."];
-const MOODS={
-  idle:{},
-  happy:{7:".HhSSSSSSSSSSSSSShH.",8:"HHhSKKKSSSSSSKKKShHH",9:".HhSSSSSSSSSSSSSShH.",12:"HH.SSKMMMMMMMMKSS.HH",13:"H..SSSMWWKWWWMSSS..H",14:"H...SSSMMTTMMSSS...H"},
-  think:{7:".HhSSSKKSSSSKKSSShH.",8:"HHhSSEWSSSSSSEWSShHH",9:".HhSSEWSSSSSSEWSShH.",12:"HH.SSSSSSSSSSSSSS.HH",13:"H..SSSSSKMMKSSSSS..H",14:"H...SSSSSSSSSSSS...H"}
-};
-function girlSVG(mood,size){
-  const g=BASE.map((r,i)=>(MOODS[mood]||{})[i]||r);
-  const W=22,Hh=g.length+2; let out='';
-  const at=(x,y)=>(y>=0&&y<g.length&&x>=0&&x<20)?g[y][x]:'.';
-  for(let y=-1;y<=g.length;y++) for(let x=-1;x<=20;x++){
-    const c=at(x,y);
-    if(c!=='.'){ out+=`<rect x="${x+1}" y="${y+1}" width="1" height="1" fill="${PAL[c]}"/>`; continue; }
-    if([[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy])=>at(x+dx,y+dy)!=='.') && y<g.length) out+=`<rect x="${x+1}" y="${y+1}" width="1" height="1" fill="#3a2418"/>`;
-  }
-  return `<svg class="girl ${mood}" viewBox="0 0 ${W} ${Hh}" width="${size||88}" height="${Math.round((size||88)*Hh/W)}" shape-rendering="crispEdges" aria-hidden="true">${out}</svg>`;
-}
-const PHRASES={idle:['Let’s go!','You can do it!','Ready? Go!','Let’s play!','I’m ready!'],happy:['Great job! 🎉','Super! ⭐','Well done! 🏆','Brilliant! ✨'],think:['Try again! 💪','Almost! 🔁','Look again! 👀','Nearly there!']};
+/* ============ Pixel girl sprites ============ */
+const SPR={idle:['stand','chin','flower','wonder'],happy:['laugh','dance'],think:['wonder']};
+const PHRASES={idle:['Let\u2019s go!','You can do it!','Ready? Go!','Let\u2019s play!','I\u2019m ready!'],happy:['Great job! 🎉','Super! ⭐','Well done! 🏆','Brilliant! ✨'],think:['Try again! 💪','Almost! 🔁','Look again! 👀','Hmm… nearly!']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
-function hero(mood,text){ return `<div class="hero">${girlSVG(mood)}<div class="bubble">${text||pick(PHRASES[mood])}</div></div>`; }
+let sprN=0;
+function girlImg(name,h){ return `<img class="girl g-${name}" src="img/${name}.png" alt="" style="height:${h||130}px" draggable="false">`; }
+function hero(mood,text,name,h){
+  name = name || (mood==='idle' ? SPR.idle[(sprN++)%SPR.idle.length] : pick(SPR[mood]));
+  return `<div class="hero ${mood}">${girlImg(name,h)}<div class="bubble">${text||pick(PHRASES[mood])}</div></div>`;
+}
 
 /* ============ Answer checking ============ */
 function norm(s){
@@ -802,7 +779,7 @@ In: the frog is in the water.`,
 /* ============ App / routing ============ */
 let currentLang='ru';
 function home(){
-  return `<header class="top"><span class="tag">ENGLISH</span><h1>Unit 1</h1></header>${hero('happy','Hi! Let\u2019s learn English together!')}
+  return `<header class="top"><span class="tag">ENGLISH</span><h1>Unit 1</h1></header>${hero('happy','Hi! Let\u2019s learn English together!','dance',150)}
   <p class="hint" style="color:var(--muted)">Выбери тему. В каждой теме: 📖 теория (можно слушать на трёх языках), 📝 задания как в тетради и ⭐ новые задания.</p>
   <div class="grid">${TOPICS.map((t,i)=>`<a class="topic" href="#${t.id}"><span class="em">${t.emoji}</span><b>${i+1}. ${esc(t.title)}</b><small>${esc(t.ru)}</small></a>`).join('')}</div>
   <footer>
@@ -817,7 +794,7 @@ function topicPage(t, tab){
   if(tab==='theory'){
     const L=LANGS[currentLang];
     const warn = (!hasVoice(L.code) && 'speechSynthesis' in window && voices.length) ? `<div class="warn">На этом устройстве нет голоса «${L.label}» — текст прочитается голосом по умолчанию.</div>`:'';
-    body = `<div class="card theory">${hero('idle','Listen to me! 🎧')}<div class="player">${Object.entries(LANGS).map(([k,v])=>`<button class="${k===currentLang?'sel':''}" onclick="setLang('${t.id}','${k}')">${v.label}</button>`).join('')}</div>
+    body = `<div class="card theory">${hero('idle','Listen to me! 🎧','chin',130)}<div class="player">${Object.entries(LANGS).map(([k,v])=>`<button class="${k===currentLang?'sel':''}" onclick="setLang('${t.id}','${k}')">${v.label}</button>`).join('')}</div>
       <div class="player"><button onclick="playTheory('${t.id}')">▶️ Слушать</button><button class="btn ghost" onclick="stopSpeak()">⏹ Стоп</button></div>${warn}
       <p>${fmt(t.theory[currentLang])}</p></div>` + (t.extra?t.extra():'');
   } else {
