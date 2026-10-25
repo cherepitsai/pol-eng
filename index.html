@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>English Unit 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
 <style>
 :root{
   --bg:#fff8f1; --card:#ffffff; --ink:#2b2118; --muted:#7a6a5c; --line:#f0dfcf;
@@ -22,6 +23,17 @@
   --accent:#ff8a3d; --accent-ink:#1b1612; --accent-soft:#3b2717;
   --ok:#4ccf86; --ok-soft:#173826; --bad:#ff7a7a; --bad-soft:#3d1c1c; --en:#7fb2ff;
 }
+.hero{display:flex;align-items:flex-end;gap:10px;margin:0 0 8px}
+.girl{image-rendering:pixelated;flex:none;animation:hop 1.2s steps(2) infinite}
+.girl.happy{animation:jump .5s steps(2) 3}
+.girl.think{animation:shake .4s steps(2) 2}
+@keyframes hop{50%{transform:translateY(-3px)}}
+@keyframes jump{50%{transform:translateY(-12px)}}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.bubble{position:relative;font-family:'Press Start 2P',ui-monospace,monospace;font-size:11px;line-height:1.6;background:var(--card);color:var(--ink);border:3px solid var(--ink);padding:8px 10px;margin-bottom:22px;box-shadow:3px 3px 0 var(--accent)}
+.bubble:before{content:"";position:absolute;left:-11px;bottom:6px;width:8px;height:8px;background:var(--ink)}
+header.top h1{font-family:'Press Start 2P',system-ui,sans-serif;font-size:20px;line-height:1.4}
+.card h3{font-family:'Press Start 2P',system-ui,sans-serif;font-size:13px;line-height:1.6}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .wrap{max-width:860px;margin:0 auto;padding:16px}
@@ -114,6 +126,54 @@ function fmt(text){ // {..} -> blue english
 }
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
+/* ============ Pixel girl (16-bit style) ============ */
+const PAL={H:'#f3e2a4',h:'#d6bd72',S:'#f8d5c3',s:'#f2a6a0',K:'#5a3b2a',E:'#3f7fd0',W:'#ffffff',M:'#c2405a',P:'#f6b3c4',p:'#e48ea6',G:'#b9de78',B:'#26201c',T:'#e9a0b0'};
+const BASE=[
+"..H.H.......H.H..H..",
+"...HHH.HHHH.HHHHH...",
+"..HHHHHHHHHHHHHHHHH.",
+"H.HHHHHhHHHHHhHHHHH.",
+".HHHhHHHHHHHHHHhHHHH",
+".HHhHHSHHHShHHSHhHH.",
+".HHSSSSSSSSSSSSSSHH.",
+".HhSSKKSSSSSSKKSShH.",
+"HHhSSWESSSSSSWESShHH",
+".HhSSWESSSSSSWESShH.",
+".HhSsSSSSKSSSSSsShH.",
+".HhSsSSSSSSSSSSsShH.",
+"HH.SSSKMMMMMMKSSS.HH",
+"H..SSSMWWKWWWMSSS..H",
+"H...SSSMMMMMMSSS...H",
+"h....SSSSSSSSSS....h",
+"h......SSSSSS......h",
+"....PPPPSSSSPPPP....",
+"...PPPPPPPPPPPPPP...",
+"..PPPPPPPPPPPPPPPP..",
+"..PPPPBBBPPBBBPPPP..",
+".PPPPBGGBPPBGGBPPPP.",
+".SPPPBGGGBBGGGBPPPS.",
+".SPPPPBGGBBGGBPPPPS.",
+".SPPPPPBBPPBBPPPPPS."];
+const MOODS={
+  idle:{},
+  happy:{7:".HhSSSSSSSSSSSSSShH.",8:"HHhSKKKSSSSSSKKKShHH",9:".HhSSSSSSSSSSSSSShH.",12:"HH.SSKMMMMMMMMKSS.HH",13:"H..SSSMWWKWWWMSSS..H",14:"H...SSSMMTTMMSSS...H"},
+  think:{7:".HhSSSKKSSSSKKSSShH.",8:"HHhSSEWSSSSSSEWSShHH",9:".HhSSEWSSSSSSEWSShH.",12:"HH.SSSSSSSSSSSSSS.HH",13:"H..SSSSSKMMKSSSSS..H",14:"H...SSSSSSSSSSSS...H"}
+};
+function girlSVG(mood,size){
+  const g=BASE.map((r,i)=>(MOODS[mood]||{})[i]||r);
+  const W=22,Hh=g.length+2; let out='';
+  const at=(x,y)=>(y>=0&&y<g.length&&x>=0&&x<20)?g[y][x]:'.';
+  for(let y=-1;y<=g.length;y++) for(let x=-1;x<=20;x++){
+    const c=at(x,y);
+    if(c!=='.'){ out+=`<rect x="${x+1}" y="${y+1}" width="1" height="1" fill="${PAL[c]}"/>`; continue; }
+    if([[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy])=>at(x+dx,y+dy)!=='.') && y<g.length) out+=`<rect x="${x+1}" y="${y+1}" width="1" height="1" fill="#3a2418"/>`;
+  }
+  return `<svg class="girl ${mood}" viewBox="0 0 ${W} ${Hh}" width="${size||88}" height="${Math.round((size||88)*Hh/W)}" shape-rendering="crispEdges" aria-hidden="true">${out}</svg>`;
+}
+const PHRASES={idle:['Let’s go!','You can do it!','Ready? Go!','Let’s play!','I’m ready!'],happy:['Great job! 🎉','Super! ⭐','Well done! 🏆','Brilliant! ✨'],think:['Try again! 💪','Almost! 🔁','Look again! 👀','Nearly there!']};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function hero(mood,text){ return `<div class="hero">${girlSVG(mood)}<div class="bubble">${text||pick(PHRASES[mood])}</div></div>`; }
+
 /* ============ Answer checking ============ */
 function norm(s){
   s = String(s).toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.,!?¿¡:;]/g,' ').replace(/-/g,' ').replace(/\s+/g,' ').trim();
@@ -135,7 +195,7 @@ function matches(val, acc){
 let exId=0;
 function renderExercise(ex){
   const id='ex'+(++exId);
-  let h = `<div class="card" id="${id}"><h3>${ex.title}</h3>`;
+  let h = `<div class="card" id="${id}">${hero('idle')}<h3>${ex.title}</h3>`;
   if(ex.hint) h+=`<p class="hint">${ex.hint}</p>`;
   if(ex.scene) h+=`<div class="scene">${ex.scene}</div>`;
   if(ex.table) h+=ex.table;
@@ -177,7 +237,8 @@ function bindExercise(id,ex){
       if(good) ok++;
     });
     const s=root.querySelector('.score');
-    s.textContent = `${ok} / ${total}` + (ok===total?' 🎉 Great job!':'');
+    s.textContent = `${ok} / ${total}`;
+    const hr=root.querySelector('.hero'); hr.outerHTML = hero(ok===total?'happy':'think');
   };
   root.querySelector('[data-act=show]').onclick=()=>{
     ex.items.forEach((it,i)=>{
@@ -190,6 +251,7 @@ function bindExercise(id,ex){
     fields().forEach(f=>{f.value='';f.classList.remove('ok','bad')});
     root.querySelectorAll('.fix').forEach(x=>x.textContent='');
     root.querySelector('.score').textContent='';
+    root.querySelector('.hero').outerHTML = hero('idle');
   };
 }
 
@@ -740,7 +802,7 @@ In: the frog is in the water.`,
 /* ============ App / routing ============ */
 let currentLang='ru';
 function home(){
-  return `<header class="top"><span class="tag">ENGLISH</span><h1>Unit 1</h1></header>
+  return `<header class="top"><span class="tag">ENGLISH</span><h1>Unit 1</h1></header>${hero('happy','Hi! Let\u2019s learn English together!')}
   <p class="hint" style="color:var(--muted)">Выбери тему. В каждой теме: 📖 теория (можно слушать на трёх языках), 📝 задания как в тетради и ⭐ новые задания.</p>
   <div class="grid">${TOPICS.map((t,i)=>`<a class="topic" href="#${t.id}"><span class="em">${t.emoji}</span><b>${i+1}. ${esc(t.title)}</b><small>${esc(t.ru)}</small></a>`).join('')}</div>
   <footer>
@@ -755,7 +817,7 @@ function topicPage(t, tab){
   if(tab==='theory'){
     const L=LANGS[currentLang];
     const warn = (!hasVoice(L.code) && 'speechSynthesis' in window && voices.length) ? `<div class="warn">На этом устройстве нет голоса «${L.label}» — текст прочитается голосом по умолчанию.</div>`:'';
-    body = `<div class="card theory"><div class="player">${Object.entries(LANGS).map(([k,v])=>`<button class="${k===currentLang?'sel':''}" onclick="setLang('${t.id}','${k}')">${v.label}</button>`).join('')}</div>
+    body = `<div class="card theory">${hero('idle','Listen to me! 🎧')}<div class="player">${Object.entries(LANGS).map(([k,v])=>`<button class="${k===currentLang?'sel':''}" onclick="setLang('${t.id}','${k}')">${v.label}</button>`).join('')}</div>
       <div class="player"><button onclick="playTheory('${t.id}')">▶️ Слушать</button><button class="btn ghost" onclick="stopSpeak()">⏹ Стоп</button></div>${warn}
       <p>${fmt(t.theory[currentLang])}</p></div>` + (t.extra?t.extra():'');
   } else {
